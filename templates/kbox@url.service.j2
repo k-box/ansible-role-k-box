@@ -1,0 +1,19 @@
+[Unit]
+Description=KBox Document management system on {{ item.key }}
+Requires=docker.service
+Requires=reverseproxy.service
+After=docker.service
+After=reverseproxy.service
+
+[Service]
+WorkingDirectory={{ item.value.path }}
+Restart=on-failure
+
+# Compose up
+ExecStart=/usr/local/bin/docker-compose up
+
+# Compose down, remove containers and non-persistent volumes
+ExecStop=/usr/local/bin/docker-compose down -v
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+
+  - name: reload systemctl
+    shell: systemctl daemon-reload
+    changed_when: False
+
+  - name: reload kboxes
+    shell: "docker-compose up -d"
+    args:
+      chdir: "{{ item.value.path }}"
+    with_dict: "{{ k_boxes }}"
+    changed_when: False

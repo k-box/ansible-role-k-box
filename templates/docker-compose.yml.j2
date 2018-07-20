@@ -1,0 +1,99 @@
+# Deployment configuration for k-box on {{ item.key }}
+
+version: '2.1'
+
+networks:
+  internal:
+  web:
+    external:
+      name: reverseproxy_web
+
+services:
+  solr:
+    image: "{{ item.value.images.solr }}"
+    mem_limit: 2G
+    cpu_shares: 1024
+    restart: on-failure
+{% if 'data' in item.value %}
+    volumes:
+      - "{{ item.value.data }}/k-search/:/opt/solr/k-search/k-search/data:rw"
+{% endif %}
+    networks:
+      - internal
+
+  ksearch:
+    image: "{{ item.value.images.k_search }}"
+    mem_limit: 1G
+    cpu_shares: 1024
+    restart: on-failure
+    depends_on:
+      - "solr"
+    environment:
+      - "SOLR_HOST=solr"
+      - "SOLR_NAME=k-search"
+      - "KLINK_REGISTRY_ENABLED=0"
+      - "KLINK_REGISTRY_API_URL=https://example.com/registry/" # not used, but mandatory
+      - KLINK_RETAIN_DOWNLOADED_FILES=0 # clean cached files
+    networks:
+      internal:
+        aliases:
+          - "ksearch.internal"
+
+  ## K-Box database service part
+  database:
+    image: "mariadb:10"
+    mem_limit: 1G
+    cpu_shares: 1024
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: "dms"
+      MYSQL_USER: "dms"
+      MYSQL_ROOT_PASSWORD: "db_root_pw"
+      MYSQL_PASSWORD: "{{ item.value.mysql_pw | default('db_pw') }}"
+{% if 'data' in item.value %}
+    volumes:
+      - "{{ item.value.data }}/k-box/database:/var/lib/mysql"
+{% endif %}
+    networks:
+      - internal
+
+  ## K-Box service part
+  kbox:
+    image: "{{ item.value.images.k_box }}"
+    mem_limit: 1G
+    cpu_shares: 1024
+    restart: on-failure
+    depends_on:
+      - "database"
+    environment:
+      - "KLINK_DMS_DB_NAME=dms"
+      - "KLINK_DMS_DB_USERNAME=dms"
+      - "KLINK_DMS_DB_HOST=database"
+      - "KLINK_DMS_DB_TABLE_PREFIX=dms_"
+      - "KLINK_DMS_DB_PASSWORD={{ item.value.mysql_pw | default('db_pw') }}"
+      - "KLINK_DMS_ADMIN_USERNAME={{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.username') }}"
+      - "KLINK_DMS_ADMIN_PASSWORD={{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.password') }}"
+      - "KLINK_DMS_APP_URL=https://{{ item.key }}/"
+      - "KLINK_DMS_APP_INTERNAL_URL=http://kbox/"
+      - "KLINK_DMS_CORE_ADDRESS=http://ksearch.internal/"
+      - "DMS_CORE_USERNAME=admin@klink.org" # mandatory, no longer used for v3
+      - "DMS_CORE_PASSWORD=deprecated" # mandatory, no longer used for v3
+      - "KLINK_PHP_UPLOAD_MAX_FILESIZE=2048M"
+      - "KLINK_PHP_POST_MAX_SIZE=2068M"
+      - "KLINK_DMS_MAX_UPLOAD_SIZE=2000000" # Hard limit of 2GB uploads
+    env_file:
+      - kbox.env # app key
+{% if 'storage' in item.value %}
+    volumes:
+      - "{{ item.value.storage }}/k-box/data:/var/www/dms/storage:rw"
+{% elif 'data' in item.value %}
+    volumes:
+      - "{{ item.value.data }}/k-box/data:/var/www/dms/storage:rw"
+{% endif %}
+    networks:
+      - internal
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host: {{ item.key }}"
+      - "traefik.docker.network=reverseproxy_web"

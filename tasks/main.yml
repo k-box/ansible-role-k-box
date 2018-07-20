@@ -1,0 +1,53 @@
+---
+  - name: ensure project directories are created
+    file:
+      dest: "{{ item.value.path }}"
+      state: directory
+    with_dict: "{{ k_boxes }}"
+
+  - name: ensure storage (mounted) directories are created
+    file:
+      dest: "{{ item.value.storage }}"
+      state: directory
+    with_dict: "{{ k_boxes }}"
+    when: "'storage' in item.value"
+
+  - name: ensure data directories are created
+    file:
+      dest: "{{ item.value.data }}"
+      state: directory
+    with_dict: "{{ k_boxes }}"
+    when: "'data' in item.value"
+
+  - name: ensure app keys are in place
+    template:
+      src: "kbox.env.j2"
+      dest: "{{ item.value.path }}/kbox.env"
+      force: no # only create if it does not exist
+    with_dict: "{{ k_boxes }}"
+
+  - name: ensure docker service file is existant
+    template:
+      src: "docker-compose.yml.j2"
+      dest: "{{ item.value.path }}/docker-compose.yml"
+    with_dict: "{{ k_boxes }}"
+    notify:
+      - reload kboxes
+
+  - name: ensure kbox is registered as a system service
+    template:
+      src: "kbox@url.service.j2"
+      dest: "/lib/systemd/system/kbox@{{ item.key }}.service"
+      owner: root
+      group: root
+      mode: 0644
+    with_dict: "{{ k_boxes }}"
+    notify:
+      - reload systemctl
+
+  - name: ensure kbox is running and enabled at boot
+    service:
+      name: "kbox@{{ item.key }}.service"
+      enabled: yes
+      state: started
+    with_dict: "{{ k_boxes }}"
