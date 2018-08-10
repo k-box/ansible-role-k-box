@@ -78,9 +78,9 @@ services:
       - "KLINK_DMS_CORE_ADDRESS=http://ksearch.internal/"
       - "DMS_CORE_USERNAME=admin@klink.org" # mandatory, no longer used for v3
       - "DMS_CORE_PASSWORD=deprecated" # mandatory, no longer used for v3
-      - "KLINK_PHP_UPLOAD_MAX_FILESIZE=2048M"
-      - "KLINK_PHP_POST_MAX_SIZE=2068M"
-      - "KLINK_DMS_MAX_UPLOAD_SIZE=2000000" # Hard limit of 2GB uploads
+      - "KBOX_PHP_UPLOAD_MAX_FILESIZE=2048M"
+      - "KBOX_PHP_POST_MAX_SIZE=2068M"
+      - "KBOX_UPLOAD_LIMIT=209715200" # Hard limit of 2GB uploads
     env_file:
       - kbox.env # app key
 {% if 'storage' in item.value %}
