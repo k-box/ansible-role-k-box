@@ -81,6 +81,9 @@ services:
       - "KBOX_PHP_UPLOAD_MAX_FILESIZE=2048M"
       - "KBOX_PHP_POST_MAX_SIZE=2068M"
       - "KBOX_UPLOAD_LIMIT=209715200" # Hard limit of 2GB uploads
+{% if 'flags' in item.value %}
+      - "KBOX_FLAGS={{ item.value.flags }}"
+{% endif %}
     env_file:
       - kbox.env # app key
 {% if 'storage' in item.value %}
