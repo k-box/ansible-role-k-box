@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: OneOffTech UG
+  description: "Dockerized K-Box"
+  license: MIT
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: Debian
+    versions:
+      - buster
+      - stretch
+  galaxy_tags:
+  - docker
+  - docker-compose
+  - service
+  - systemd
+  - debian
+  - k-box
+  - k-link
+
+dependencies: []
