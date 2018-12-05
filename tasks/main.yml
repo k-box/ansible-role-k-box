@@ -26,6 +26,26 @@
       force: no # only create if it does not exist
     with_dict: "{{ k_boxes }}"
 
+  - name: ensure privacy policy legal text is present
+    copy:
+      src: "{{ item.value.privacy.legal }}"
+      dest: "{{ item.value.path }}/privacy-legal.en.md"
+      owner: root
+      group: root
+      mode: 0644
+    with_dict: "{{ k_boxes }}"
+    when: "'privacy' in item.value"
+
+  - name: ensure privacy policy summary text is present
+    copy:
+      src: "{{ item.value.privacy.summary }}"
+      dest: "{{ item.value.path }}/privacy-summary.en.md"
+      owner: root
+      group: root
+      mode: 0644
+    with_dict: "{{ k_boxes }}"
+    when: "'privacy' in item.value"
+
   - name: ensure docker service file is existant
     template:
       src: "docker-compose.yml.j2"

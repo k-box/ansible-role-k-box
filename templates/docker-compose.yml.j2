@@ -84,6 +84,9 @@ services:
 {% if 'flags' in item.value %}
       - "KBOX_FLAGS={{ item.value.flags }}"
 {% endif %}
+{% if 'privacy' in item.value %}
+      - "KBOX_LOAD_PRIVACY=true"
+{% endif %}
     env_file:
       - kbox.env # app key
 {% if 'storage' in item.value %}
@@ -92,6 +95,10 @@ services:
 {% elif 'data' in item.value %}
     volumes:
       - "{{ item.value.data }}/k-box/data:/var/www/dms/storage:rw"
+{% endif %}
+{% if 'privacy' in item.value %}
+      - "./privacy-legal.en.md:/var/www/dms/resources/assets/pages/stubs/privacy-legal.en.md"
+      - "./privacy-summary.en.md:/var/www/dms/resources/assets/pages/stubs/privacy-summary.en.md"
 {% endif %}
     networks:
       - internal
