@@ -36,18 +36,18 @@ k_boxes:
     # to migrate old deployments, the old mysql pw can be supplied
     mysql_pw: "hunter1"
     images:
-      k_box: "docker.klink.asia/images/k-box:0.20.1"
-      k_search: "docker.klink.asia/images/k-search:3.2.0-1"
-      solr: "docker.klink.asia/images/k-search-engine:0.4.1"
+      k_box: "docker.klink.asia/images/k-box:0.25.0"
+      k_search: "docker.klink.asia/images/k-search:3.6.0-2"
+      solr: "docker.klink.asia/images/k-search-engine:1.0.1"
 
   # multiple k-boxes can be defined per host
   old.kbox.net:
     path: "/home/user/deploy/k-box/old-kbox-asia"
     data: "/data/k-box/old-kbox-asia"
     images:
-      k_box: "docker.klink.asia/images/dms:0.20.1"
-      k_search: "docker.klink.asia/images/k-search:3.2.0-1"
-      solr: "docker.klink.asia/images/k-search-engine:0.4.1"
+      k_box: "docker.klink.asia/images/k-box:0.24.1"
+      k_search: "docker.klink.asia/images/k-search:3.6.0-2"
+      solr: "docker.klink.asia/images/k-search-engine:1.0.1"
 
 ```
 
