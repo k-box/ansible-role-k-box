@@ -84,6 +84,9 @@ services:
 {% if 'flags' in item.value %}
       - "KBOX_FLAGS={{ item.value.flags }}"
 {% endif %}
+{% if 'enable_guest_network_search' in item.value %}
+      - "KBOX_ENABLE_GUEST_NETWORK_SEARCH={{ item.value.enable_guest_network_search }}"
+{% endif %}
 {% if 'privacy' in item.value %}
       - "KBOX_LOAD_PRIVACY=true"
 {% endif %}
