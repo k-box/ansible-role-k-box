@@ -1,6 +1,6 @@
 # K-Box
 The K-Box is able to set up containerized K-Boxes on the host system. It
-supports K-Box version 0.20.0 to 0.26.x.
+supports K-Box version 0.20.0 to 0.27.x.
 
 This role also provides a way to upgrade to newer versions.
 Downgrading back to older versions is not supported.
@@ -36,18 +36,18 @@ k_boxes:
     # to migrate old deployments, the old mysql pw can be supplied
     mysql_pw: "hunter1"
     images:
-      k_box: "docker.klink.asia/images/k-box:0.26.0"
-      k_search: "docker.klink.asia/images/k-search:3.6.0-2"
-      solr: "docker.klink.asia/images/k-search-engine:1.0.1"
+      k_box: "klinktech/k-box:0.27.2"
+      k_search: "klinktech/k-search:3.6.0-2"
+      solr: "klinktech/k-search-engine:1.0.1-1"
 
   # multiple k-boxes can be defined per host
   old.kbox.net:
-    path: "/home/user/deploy/k-box/old-kbox-asia"
-    data: "/data/k-box/old-kbox-asia"
+    path: "/home/user/deploy/k-box/old-kbox-net"
+    data: "/data/k-box/old-kbox-net"
     images:
-      k_box: "docker.klink.asia/images/k-box:0.24.1"
-      k_search: "docker.klink.asia/images/k-search:3.6.0-2"
-      solr: "docker.klink.asia/images/k-search-engine:1.0.1"
+      k_box: "klinktech/k-box:0.24.1"
+      k_search: "klinktech/k-search:3.6.0-2"
+      solr: "klinktech/k-search-engine:1.0.1-1"
 
 ```
 
