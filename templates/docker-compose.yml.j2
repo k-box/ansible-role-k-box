@@ -90,6 +90,45 @@ services:
 {% if 'privacy' in item.value %}
       - "KBOX_LOAD_PRIVACY=true"
 {% endif %}
+{% if 'mail' in item.value %}
+{% if 'driver' in item.value.mail %}
+      - "KBOX_MAIL_DRIVER={{ item.value.mail.driver }}"
+{% endif %}
+{% if 'host' in item.value.mail %}
+      - "KBOX_MAIL_HOST={{ item.value.mail.host }}"
+{% endif %}
+{% if 'port' in item.value.mail %}
+      - "KBOX_MAIL_PORT={{ item.value.mail.port }}"
+{% endif %}
+{% if 'from_address' in item.value.mail %}
+      - "KBOX_MAIL_FROM_ADDRESS={{ item.value.mail.from_address }}"
+{% endif %}
+{% if 'from_name' in item.value.mail %}
+      - "KBOX_MAIL_FROM_NAME={{ item.value.mail.from_name }}"
+{% endif %}
+{% if 'username' in item.value.mail %}
+      - "KBOX_MAIL_USERNAME={{ item.value.mail.username }}"
+{% endif %}
+{% if 'password' in item.value.mail %}
+      - "KBOX_MAIL_PASSWORD={{ item.value.mail.password }}"
+{% endif %}
+{% endif %}
+{% if 'analytics' in item.value %}
+{% if 'token' in item.value.analytics %}
+      - "KBOX_ANALYTICS_TOKEN={{ item.value.analytics.token }}"
+{% endif %}
+{% if 'service' in item.value.analytics %}
+      - "KBOX_ANALYTICS_SERVICE={{ item.value.analytics.service }}"
+{% endif %}
+{% if 'matomo_domain' in item.value.analytics %}
+      - "KBOX_ANALYTICS_MATOMO_DOMAIN={{ item.value.analytics.matomo_domain }}"
+{% endif %}
+{% endif %}
+{% if 'support' in item.value %}
+{% if 'uservoice_token' in item.value.support %}
+      - "KBOX_SUPPORT_USERVOICE_TOKEN={{ item.value.support.uservoice_token }}"
+{% endif %}
+{% endif %}
     env_file:
       - kbox.env # app key
 {% if 'storage' in item.value %}
