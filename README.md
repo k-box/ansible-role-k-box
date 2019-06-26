@@ -1,12 +1,13 @@
 # K-Box
 The K-Box is able to set up containerized K-Boxes on the host system. It
-supports K-Box version 0.20.0 to 0.27.x.
+supports K-Box version 0.20.0 to 0.28.x.
 
 This role also provides a way to upgrade to newer versions.
 Downgrading back to older versions is not supported.
 
 ## Requirements
-A working docker and reverseproxy installation is all you need.
+
+A working docker and reverseproxy installation.
 
 ## Configuration Variables
 ```yaml
@@ -36,7 +37,7 @@ k_boxes:
     # to migrate old deployments, the old mysql pw can be supplied
     mysql_pw: "hunter1"
     images:
-      k_box: "klinktech/k-box:0.27.2"
+      k_box: "klinktech/k-box:0.28.0"
       k_search: "klinktech/k-search:3.6.0-2"
       solr: "klinktech/k-search-engine:1.0.1-1"
 
@@ -45,7 +46,7 @@ k_boxes:
     path: "/home/user/deploy/k-box/old-kbox-net"
     data: "/data/k-box/old-kbox-net"
     images:
-      k_box: "klinktech/k-box:0.24.1"
+      k_box: "klinktech/k-box:0.27.2"
       k_search: "klinktech/k-search:3.6.0-2"
       solr: "klinktech/k-search-engine:1.0.1-1"
 
