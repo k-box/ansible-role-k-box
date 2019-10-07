@@ -137,6 +137,14 @@ services:
       - KBOX_DEFAULT_STORAGE_QUOTA_THRESHOLD_NOTIFICATION={{ item.value.quota.threshold }}
 {% endif %}
 {% endif %}
+{% if 'registration' in item.value %}
+{% if 'enabled' in item.value.registration %}
+      - KBOX_USER_REGISTRATION=true
+{% endif %}
+{% if 'require_invite' in item.value.registration %}
+      - KBOX_USER_REGISTRATION_INVITE_ONLY=true
+{% endif %}
+{% endif %}
     env_file:
       - kbox.env # app key
 {% if 'storage' in item.value %}
