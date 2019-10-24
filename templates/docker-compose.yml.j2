@@ -126,7 +126,11 @@ services:
 {% endif %}
 {% if 'support' in item.value %}
 {% if 'uservoice_token' in item.value.support %}
+      - KBOX_SUPPORT_SERVICE=uservoice
       - "KBOX_SUPPORT_USERVOICE_TOKEN={{ item.value.support.uservoice_token }}"
+{% elif 'mail_address' in item.value.support %}
+      - KBOX_SUPPORT_SERVICE=mail
+      - "KBOX_SUPPORT_MAIL_ADDRESS={{ item.value.support.mail_address }}"
 {% endif %}
 {% endif %}
 {% if 'quota' in item.value %}
