@@ -50,6 +50,11 @@ services:
       MYSQL_USER: "dms"
       MYSQL_ROOT_PASSWORD: "db_root_pw"
       MYSQL_PASSWORD: "{{ item.value.mysql_pw | default('db_pw') }}"
+      # due to https://github.com/docker-library/mariadb/issues/262
+      # we need to skip TZ initialization, since the database will not
+      # come back up again. This bug affects 10.4.x (current stable)
+      # and has existed for multiple months now.
+      MYSQL_INITDB_SKIP_TZINFO: "1"
 {% if 'data' in item.value %}
     volumes:
       - "{{ item.value.data }}/k-box/database:/var/lib/mysql"
