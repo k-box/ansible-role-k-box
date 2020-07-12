@@ -167,7 +167,9 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.rule=Host(`{{ item.key }}`)"
-      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.entrypoints=websecure"
-      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.tls=true"
-      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.tls.certresolver=mytls"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.rule=Host(`{{ item.key }}`)"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.entrypoints=websecure"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.tls=true"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.tls.certresolver=mytls"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.service=kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}"
+      - "traefik.http.services.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.loadbalancer.server.port=80"
