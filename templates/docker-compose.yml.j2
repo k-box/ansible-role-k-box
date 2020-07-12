@@ -167,7 +167,7 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kbox.rule=Host(`{{ item.key }}`)"
-      - "traefik.http.routers.kbox.entrypoints=websecure"
-      - "traefik.http.routers.kbox.tls=true"
-      - "traefik.http.routers.kbox.tls.certresolver=mytls"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.rule=Host(`{{ item.key }}`)"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.entrypoints=websecure"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.tls=true"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "_") }}.tls.certresolver=mytls"
