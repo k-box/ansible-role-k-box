@@ -1,13 +1,18 @@
 # K-Box
+
 The K-Box is able to set up containerized K-Boxes on the host system. It
-supports K-Box version 0.20.0 to 0.28.x.
+supports K-Box version 0.20.0 to 0.29.x.
 
 This role also provides a way to upgrade to newer versions.
 Downgrading back to older versions is not supported.
 
+> `master` uses Traefik version 2.x, if you are still on 
+Traefik 1.x use [`traefik-1.x` branch](https://github.com/k-box/ansible-role-k-box/tree/traefik-1.x)
+
 ## Requirements
 
-A working docker and reverseproxy installation.
+A working [docker](https://github.com/OneOffTech/ansible-role-docker) 
+and [Traefik reverseproxy](https://github.com/OneOffTech/ansible-role-reverseproxy) installation.
 
 ## Configuration Variables
 ```yaml
@@ -37,7 +42,7 @@ k_boxes:
     # to migrate old deployments, the old mysql pw can be supplied
     mysql_pw: "hunter1"
     images:
-      k_box: "klinktech/k-box:0.28.0"
+      k_box: "klinktech/k-box:0.29.0"
       k_search: "klinktech/k-search:3.6.0-2"
       solr: "klinktech/k-search-engine:1.0.1-1"
 
@@ -53,6 +58,7 @@ k_boxes:
 ```
 
 ## Upgrading installations
+
 To Upgrade installations it is sufficient to simply increment the version
 Numbers and run the playbook again.
 
