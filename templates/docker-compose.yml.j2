@@ -6,7 +6,7 @@ networks:
   internal:
   web:
     external:
-      name: reverseproxy_web
+      name: reverseproxy_traefik_web
 
 services:
   solr:
@@ -167,7 +167,9 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.website.rule=Host(`{{ item.key }}`)"
-      - "traefik.http.routers.website.entrypoints=websecure"
-      - "traefik.http.routers.website.tls=true"
-      - "traefik.http.services.website.loadbalancer.server.port=80"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.rule=Host(`{{ item.key }}`)"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.entrypoints=websecure"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.tls=true"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.tls.certresolver=mytls"
+      - "traefik.http.routers.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.service=kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}"
+      - "traefik.http.services.kbox_{{ item.key | replace(".", "-") | replace("_", "-") }}.loadbalancer.server.port=80"
