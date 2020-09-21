@@ -73,7 +73,7 @@ services:
       - KLINK_DMS_DB_PASSWORD="{{ item.value.mysql_pw | default('db_pw') }}"
       - KLINK_DMS_ADMIN_USERNAME="{{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.username') }}"
       - KLINK_DMS_ADMIN_PASSWORD="{{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.password') }}"
-      - KLINK_DMS_APP_URL="https://{{ item.key }}/"
+      - "KLINK_DMS_APP_URL=https://{{ item.key }}/"
       - KLINK_DMS_APP_INTERNAL_URL="http://kbox/"
       - KLINK_DMS_CORE_ADDRESS="http://ksearch.internal/"
       - DMS_CORE_USERNAME="admin@klink.org" # mandatory, no longer used for v3
