@@ -66,71 +66,71 @@ services:
     depends_on:
       - "database"
     environment:
-      - "KLINK_DMS_DB_NAME=dms"
-      - "KLINK_DMS_DB_USERNAME=dms"
-      - "KLINK_DMS_DB_HOST=database"
-      - "KLINK_DMS_DB_TABLE_PREFIX=dms_"
-      - "KLINK_DMS_DB_PASSWORD={{ item.value.mysql_pw | default('db_pw') }}"
-      - "KLINK_DMS_ADMIN_USERNAME={{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.username') }}"
-      - "KLINK_DMS_ADMIN_PASSWORD={{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.password') }}"
+      - KLINK_DMS_DB_NAME="dms"
+      - KLINK_DMS_DB_USERNAME="dms"
+      - KLINK_DMS_DB_HOST="database"
+      - KLINK_DMS_DB_TABLE_PREFIX="dms_"
+      - KLINK_DMS_DB_PASSWORD="{{ item.value.mysql_pw | default('db_pw') }}"
+      - KLINK_DMS_ADMIN_USERNAME="{{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.username') }}"
+      - KLINK_DMS_ADMIN_PASSWORD="{{ lookup('keepass', '/ansible/k-boxes/' + item.key + '.password') }}"
       - "KLINK_DMS_APP_URL=https://{{ item.key }}/"
-      - "KLINK_DMS_APP_INTERNAL_URL=http://kbox/"
-      - "KLINK_DMS_CORE_ADDRESS=http://ksearch.internal/"
-      - "DMS_CORE_USERNAME=admin@klink.org" # mandatory, no longer used for v3
-      - "DMS_CORE_PASSWORD=deprecated" # mandatory, no longer used for v3
-      - "KBOX_PHP_UPLOAD_MAX_FILESIZE=2048M"
-      - "KBOX_PHP_POST_MAX_SIZE=2068M"
-      - "KBOX_UPLOAD_LIMIT=209715200" # Hard limit of 2GB uploads
+      - KLINK_DMS_APP_INTERNAL_URL="http://kbox/"
+      - KLINK_DMS_CORE_ADDRESS="http://ksearch.internal/"
+      - DMS_CORE_USERNAME="admin@klink.org" # mandatory, no longer used for v3
+      - DMS_CORE_PASSWORD="deprecated" # mandatory, no longer used for v3
+      - KBOX_PHP_UPLOAD_MAX_FILESIZE="2048M"
+      - KBOX_PHP_POST_MAX_SIZE="2068M"
+      - KBOX_UPLOAD_LIMIT="209715200" # Hard limit of 2GB uploads
 {% if 'flags' in item.value %}
-      - "KBOX_FLAGS={{ item.value.flags }}"
+      - KBOX_FLAGS="{{ item.value.flags }}"
 {% endif %}
 {% if 'enable_guest_network_search' in item.value %}
-      - "KBOX_ENABLE_GUEST_NETWORK_SEARCH={{ item.value.enable_guest_network_search }}"
+      - KBOX_ENABLE_GUEST_NETWORK_SEARCH="{{ item.value.enable_guest_network_search }}"
 {% endif %}
 {% if 'privacy' in item.value %}
-      - "KBOX_LOAD_PRIVACY=true"
+      - KBOX_LOAD_PRIVACY=true
 {% endif %}
 {% if 'mail' in item.value %}
 {% if 'driver' in item.value.mail %}
-      - "KBOX_MAIL_DRIVER={{ item.value.mail.driver }}"
+      - KBOX_MAIL_DRIVER="{{ item.value.mail.driver }}"
 {% endif %}
 {% if 'host' in item.value.mail %}
       - "KBOX_MAIL_HOST={{ item.value.mail.host }}"
 {% endif %}
 {% if 'port' in item.value.mail %}
-      - "KBOX_MAIL_PORT={{ item.value.mail.port }}"
+      - KBOX_MAIL_PORT="{{ item.value.mail.port }}"
 {% endif %}
 {% if 'from_address' in item.value.mail %}
-      - "KBOX_MAIL_FROM_ADDRESS={{ item.value.mail.from_address }}"
+      - KBOX_MAIL_FROM_ADDRESS="{{ item.value.mail.from_address }}"
 {% endif %}
 {% if 'from_name' in item.value.mail %}
-      - "KBOX_MAIL_FROM_NAME={{ item.value.mail.from_name }}"
+      - KBOX_MAIL_FROM_NAME="{{ item.value.mail.from_name }}"
 {% endif %}
 {% if 'username' in item.value.mail %}
-      - "KBOX_MAIL_USERNAME={{ item.value.mail.username }}"
+      - KBOX_MAIL_USERNAME="{{ item.value.mail.username }}"
 {% endif %}
 {% if 'password' in item.value.mail %}
-      - "KBOX_MAIL_PASSWORD={{ item.value.mail.password }}"
+      - KBOX_MAIL_PASSWORD="{{ item.value.mail.password }}"
 {% endif %}
 {% endif %}
 {% if 'analytics' in item.value %}
 {% if 'token' in item.value.analytics %}
-      - "KBOX_ANALYTICS_TOKEN={{ item.value.analytics.token }}"
+      - KBOX_ANALYTICS_TOKEN="{{ item.value.analytics.token }}"
 {% endif %}
 {% if 'service' in item.value.analytics %}
-      - "KBOX_ANALYTICS_SERVICE={{ item.value.analytics.service }}"
+      - KBOX_ANALYTICS_SERVICE="{{ item.value.analytics.service }}"
 {% endif %}
 {% if 'matomo_domain' in item.value.analytics %}
-      - "KBOX_ANALYTICS_MATOMO_DOMAIN={{ item.value.analytics.matomo_domain }}"
+      - KBOX_ANALYTICS_MATOMO_DOMAIN="{{ item.value.analytics.matomo_domain }}"
 {% endif %}
 {% endif %}
 {% if 'support' in item.value %}
 {% if 'uservoice_token' in item.value.support %}
       - KBOX_SUPPORT_SERVICE=uservoice
-      - "KBOX_SUPPORT_USERVOICE_TOKEN={{ item.value.support.uservoice_token }}"
+      - KBOX_SUPPORT_USERVOICE_TOKEN="{{ item.value.support.uservoice_token }}"
 {% elif 'mail_address' in item.value.support %}
       - KBOX_SUPPORT_SERVICE=mail
-      - "KBOX_SUPPORT_MAIL_ADDRESS={{ item.value.support.mail_address }}"
+      - KBOX_SUPPORT_MAIL_ADDRESS="{{ item.value.support.mail_address }}"
 {% endif %}
 {% endif %}
 {% if 'quota' in item.value %}
