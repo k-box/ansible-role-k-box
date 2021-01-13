@@ -1,7 +1,7 @@
 # K-Box
 
 The K-Box is able to set up containerized K-Boxes on the host system. It
-supports K-Box version 0.20.0 to 0.29.x.
+supports K-Box version 0.20.0 to 0.32.x.
 
 This role also provides a way to upgrade to newer versions.
 Downgrading back to older versions is not supported.
@@ -42,7 +42,7 @@ k_boxes:
     # to migrate old deployments, the old mysql pw can be supplied
     mysql_pw: "hunter1"
     images:
-      k_box: "klinktech/k-box:0.29.0"
+      k_box: "klinktech/k-box:0.32.1"
       k_search: "klinktech/k-search:3.6.0-2"
       solr: "klinktech/k-search-engine:1.0.1-1"
 
