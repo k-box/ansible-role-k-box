@@ -15,11 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        path: kbox
         fetch-depth: 1
         
     - name: Run Testsuite
       run: |
+        pwd
+        ls -la
         docker run --rm -t \
           -v "$(pwd)":/molecule/kbox/ \
           -v /var/run/docker.sock:/var/run/docker.sock \
