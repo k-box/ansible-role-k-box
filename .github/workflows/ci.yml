@@ -18,6 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        path: kbox
         fetch-depth: 1
         
     - name: Run Testsuite
