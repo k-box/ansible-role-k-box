@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+
+  vars:
+    k_boxes:
+      localhost:
+        path: "/home/user/deploy/k-box/localhost"
+        data: "/data/k-box/localhost"
+        mysql_pw: "not-safe-at-all"
+        admin_user: "user@local.host"
+        admin_psw: "not-safe-at-all"
+        app_key: "12345678901234567890123456789012"
+        images:
+          k_box: "klinktech/k-box:0.32.3"
+          k_search: "klinktech/k-search:3.6.0-2"
+          solr: "klinktech/k-search-engine:1.0.1"
+
+
+  tasks:
+    - name: "Include kbox"
+      include_role:
+        name: "kbox"

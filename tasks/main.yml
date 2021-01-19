@@ -63,7 +63,7 @@
       mode: 0644
     with_dict: "{{ k_boxes }}"
     notify:
-      - reload systemctl
+      - reload systemd
 
   - name: ensure kbox is running and enabled at boot
     service:
@@ -71,3 +71,4 @@
       enabled: yes
       state: started
     with_dict: "{{ k_boxes }}"
+    when: not lookup('env', 'MOLECULE_FILE')  # skip when running tests
