@@ -1,7 +1,8 @@
 ---
 
-  - name: reload systemctl
-    shell: systemctl daemon-reload
+  - name: force systemd to reload configuration
+    systemd:
+      daemon_reload: True
     changed_when: False
 
   - name: reload kboxes
