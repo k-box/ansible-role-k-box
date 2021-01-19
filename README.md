@@ -78,7 +78,7 @@ Docker under Debian 10 (buster).
 docker run --rm -it \
   -v "$(pwd)":/molecule/kbox/ \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -w /molecule/kobx/ \
+  -w /molecule/kbox/ \
   quay.io/ansible/molecule:3.1.5 \
   molecule {command}
 ```
