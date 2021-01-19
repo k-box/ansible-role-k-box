@@ -1,6 +1,6 @@
 ---
 
-  - name: force systemd to reload configuration
+  - name: reload systemd
     systemd:
       daemon_reload: True
     changed_when: False
