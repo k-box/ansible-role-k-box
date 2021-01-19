@@ -71,3 +71,4 @@
       enabled: yes
       state: started
     with_dict: "{{ k_boxes }}"
+    when: not lookup('env', 'MOLECULE_FILE')  # skip when running tests
