@@ -12,11 +12,11 @@ galaxy_info:
       - stretch
   galaxy_tags:
   - docker
-  - docker-compose
+  - compose
   - service
   - systemd
   - debian
-  - k-box
-  - k-link
+  - kbox
+  - klink
 
 dependencies: []
