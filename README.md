@@ -66,3 +66,90 @@ Make sure the K-Box, K-Search and K-Search-Engine versions are compatible.
 
 Please note that you also need to re-index all documents on your K-Box when
 either upgrading from 0.19 to 0.20, or 0.20 to 0.21.
+
+## Testing
+
+Ansible role testing is done via [Molecule](https://molecule.readthedocs.io/en/latest/index.html).
+
+To prevent unattented changes to your environment, tests are run using 
+Docker under Debian 10 (buster).
+
+```bash
+docker run --rm -it \
+  -v "$(pwd)":/molecule/kbox/ \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -w /molecule/kobx/ \
+  quay.io/ansible/molecule:3.1.5 \
+  molecule {command}
+```
+
+> We assume that you are running your command on a Linux based OS or under 
+the Windows Subsystem for Linux (WSL)
+
+> **Next sections assume that you'll run the commands within Docker and** 
+**shows only the corresponding molecule command parameters**
+
+
+### Lint files
+
+Linting ensures that the syntax is correct. 
+
+You can run the linter by executing
+
+```bash
+molecule lint
+```
+
+### Execute tests
+
+Automated tests tries to ensure that changes do not introduce regressions and bugs.
+Although are executed in a production like scenario they can't be considered the
+only way the project is tested.
+
+Executing tests can be done via:
+
+```bash
+molecule test
+```
+
+This will create the test environment, i.e. the Docker container, run the linter, 
+the `converge.yml` playbook and the tests (i.e. `verify.yml`).
+
+After the execution the test environment is destroyed. If you want to preserve it
+for further inspection you can run
+
+```bash
+molecule test --destroy=never
+```
+
+> Inspecting the container can be done with `molecule login`
+
+
+### Executing manually
+
+The series of actions to create the environment under which test will be executed
+can be summarized as:
+
+```bash
+# create the docker container where tests will be run
+molecule create
+
+# enter the container to inspect the environment
+molecule login
+
+# run the converge.yml playbook that reference the role
+molecule converge 
+
+# test the role
+molecule test --destroy=never
+
+# destroy the container
+molecule destroy
+```
+
+> [Testing Ansible Roles Using Molecule](https://medium.com/swlh/testing-ansible-roles-using-molecule-1dd00765cef6) by Martin Chrobot is a great article to start using Molecule
+
+
+## License
+
+The Ansible K-Box role is licensed under [MIT](./LICENSE).
